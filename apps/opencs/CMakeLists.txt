@@ -165,7 +165,7 @@ target_link_libraries(opencs
     components
 )
 
-if(DPKG_PROGRAM)
+if(ENABLE_DPKG)
     INSTALL(TARGETS opencs RUNTIME DESTINATION games COMPONENT opencs)
 endif()
 

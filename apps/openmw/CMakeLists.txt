@@ -151,9 +151,9 @@ if(APPLE)
     endif()
 endif(APPLE)
 
-if(DPKG_PROGRAM)
+if(ENABLE_DPKG)
     INSTALL(TARGETS openmw RUNTIME DESTINATION games COMPONENT openmw)
-endif(DPKG_PROGRAM)
+endif()
 
 if (BUILD_WITH_CODE_COVERAGE)
   add_definitions (--coverage)

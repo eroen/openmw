@@ -128,7 +128,7 @@ endif(NOT WIN32)
 
 
 
-if(DPKG_PROGRAM)
+if(ENABLE_DPKG)
     INSTALL(TARGETS omwlauncher RUNTIME DESTINATION games COMPONENT omwlauncher)
 endif()
 

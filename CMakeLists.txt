@@ -57,6 +57,7 @@ if (APPLE)
     set(MORROWIND_DATA_FILES "./data" CACHE PATH "location of Morrowind data files")
     set(MORROWIND_RESOURCE_FILES "./resources" CACHE PATH "location of OpenMW resources files")
 elseif(UNIX)
+    option(ENABLE_DPKG "enable dpkg-based install for debian and debian derivatives" OFF)
     set(MORROWIND_DATA_FILES "/usr/share/games/openmw/data/" CACHE PATH "location of Morrowind data files")
     set(MORROWIND_RESOURCE_FILES "/usr/share/games/openmw/resources/" CACHE PATH "location of OpenMW resources files")
 else()
@@ -346,7 +347,7 @@ endif (CMAKE_COMPILER_IS_GNUCC)
 IF(NOT WIN32 AND NOT APPLE)
     ## Debian and non debian Linux building
     # Paths
-    IF (DPKG_PROGRAM)
+    IF (ENABLE_DPKG)
         ## Debian specific
         SET(CMAKE_INSTALL_PREFIX "/usr")
         SET(DATAROOTDIR "share" CACHE PATH "Sets the root of data directories to a non-default location")
@@ -384,7 +385,7 @@ IF(NOT WIN32 AND NOT APPLE)
         INSTALL(FILES "DejaVu Font License.txt" DESTINATION "${LICDIR}" )
         INSTALL(FILES "OFL.txt" DESTINATION "${LICDIR}" )
         INSTALL(FILES "extern/shiny/License.txt" DESTINATION "${LICDIR}" RENAME "Shiny License.txt" )
-    ENDIF (DPKG_PROGRAM)
+ENDIF (ENABLE_DPKG)
 
     # Install icon and desktop file
     INSTALL(FILES "${OpenMW_BINARY_DIR}/openmw.desktop" DESTINATION "${DATAROOTDIR}/applications" PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ COMPONENT "openmw")
@@ -406,7 +407,7 @@ IF(NOT WIN32 AND NOT APPLE)
     INSTALL(DIRECTORY "${OpenMW_BINARY_DIR}/resources" DESTINATION "${DATADIR}" FILE_PERMISSIONS OWNER_READ GROUP_READ WORLD_READ COMPONENT "Resources")
     INSTALL(DIRECTORY DESTINATION "${DATADIR}/data" COMPONENT "Resources")
 
-    IF (DPKG_PROGRAM)
+    IF (ENABLE_DPKG)
         ## Debian Specific
         IF(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/.git")
             EXEC_PROGRAM("git" ${CMAKE_CURRENT_SOURCE_DIR} ARGS "describe" OUTPUT_VARIABLE GIT_VERSION )
@@ -444,7 +445,7 @@ IF(NOT WIN32 AND NOT APPLE)
 
 
         INCLUDE(CPack)
-    ENDIF(DPKG_PROGRAM)
+    ENDIF(ENABLE_DPKG)
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 if(WIN32)
